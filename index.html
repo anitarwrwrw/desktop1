@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Praktek Pertamaku</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link rel="icon" href="assets/img/icon.ico" type="image/x-icon" />
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Lato:300,400,700,900"] },
+        custom: {
+          families: [
+            "Flaticon",
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/atlantis.min.css" />
+    <link rel="stylesheet" href="assets/libqr/qrcode-reader.min.css" />
+    <script src="assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="assets/js/atlantis.min.js"></script>
+    <script src="https://drive.crazycode.my.id/datajs/film.js"></script>
+    <script src="assets/libqr/qrcode-reader.min.js"></script>
+    <script src="assets/js/qrcode.min.js"></script>
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper overlay-sidebar">
+      <div class="main-header">
+        <div class="logo-header" data-background-color="blue2">
+          <a href="index.html" class="logo">
+            <img
+              src="assets/img/logo.svg"
+              alt="navbar brand"
+              class="navbar-brand"
+          /></a>
+          <button
+            class="navbar-toggler sidenav-toggler ml-auto"
+            type="button"
+            data-toggle="collapse"
+            data-target="collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"><i class="icon-menu"></i></span>
+          </button>
+          <button class="topbar-toggler more">
+            <i class="icon-options-vertical"></i>
+          </button>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle sidenav-overlay-toggler" id="btnx">
+              <i class="icon-menu"></i>
+            </button>
+          </div>
+        </div>
+        <nav
+          class="navbar navbar-header navbar-expand-lg"
+          data-background-color="blue2"
+        >
+          <div class="container-fluid">
+            <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+              <li class="nav-item dropdown hidden-caret">
+                <a
+                  class="nav-link"
+                  href="#"
+                  role="button"
+                  aria-expanded="false"
+                  onclick="window.location=''"
+                >
+                  <i class="fa fa-undo"></i>
+                </a>
+              </li>
+              <li class="nav-item dropdown hidden-caret">
+                <a
+                  class="nav-link"
+                  href="javascript:void(0)"
+                  role="button"
+                  aria-expanded="false"
+                  data-target="#modalqr"
+                  data-toggle="modal"
+                >
+                  <i class="fa fa-qrcode"></i>
+                </a>
+              </li>
+              <li class="nav-item dropdown hidden-caret">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="messageDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fa fa-envelope"></i>
+                </a>
+              </li>
+              <li class="nav-item dropdown hidden-caret">
+                <a
+                  class="dropdown-toggle profile-pic"
+                  data-toggle="dropdown"
+                  href="#"
+                  aria-expanded="false"
+                >
+                  <div class="avatar-sm">
+                    <img
+                      src="assets/img/profile.jpg"
+                      alt="..."
+                      class="avatar-img rounded-circle"
+                    />
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                  <div class="dropdown-user-scroll scrollbar-outer">
+                    <li>
+                      <div class="user-box">
+                        <div class="avatar-lg">
+                          <img
+                            src="assets/img/profile.jpg"
+                            alt="image profile"
+                            class="avatar-img rounded"
+                          />
+                        </div>
+                        <div class="u-text">
+                          <h4>Hizrian</h4>
+                          <p class="text-muted">hello@example.com</p>
+                          <a
+                            href="profile.html"
+                            class="btn btn-xs btn-secondary btn-sm"
+                            >View Profile</a
+                          >
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Logout</a>
+                    </li>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="sidebar sidebar-style-2">
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-primary">
+              <li class="nav-item active mnsidebar" id="mnberanda">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('beranda.html','#mnberanda')"
+                >
+                  <i class="icon-layers"></i>
+                  <p>Beranda</p>
+                </a>
+              </li>
+              <li class="nav-item mnsidebar" id="mnform">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('form.html','#mnform')"
+                >
+                  <i class="icon-note"></i>
+                  <p>Form</p>
+                </a>
+              </li>
+              <li class="nav-item mnsidebar" id="mntugas">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('tugas.html','#mntugas')"
+                >
+                  <i class="icon-calculator"></i>
+                  <p>Faktorial</p>
+                </a>
+              </li>
+              <li></li>
+              <li class="nav-item mnsidebar" id="mnevent">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('event.html','#mnevent')"
+                >
+                  <i class="icon-energy"></i>
+                  <p>Praktek Event</p>
+                </a>
+              </li>
+              <li></li>
+              <li class="nav-item mnsidebar" id="mndata">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('data.html','#mndata')"
+                >
+                  <i class="icon-book-open"></i>
+                  <p>Array Online</p>
+                </a>
+              </li>
+              <li></li>
+              <li class="nav-item mnsidebar" id="mnscan">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('scan.html','#mnscan')"
+                >
+                  <i class="icon-frame"></i>
+                  <p>QRCode Scanner</p>
+                </a>
+              </li>
+              <li></li>
+              <li class="nav-item mnsidebar" id="mnabout">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('about.html','#mnabout')"
+                >
+                  <i class="icon-tag"></i>
+                  <p>Tentang</p>
+                </a>
+              </li>
+              <li class="nav-item mnsidebar" id="mndatalokal">
+                <a
+                  href="javascript:void(0)"
+                  onclick="konten('datalokal.html','#mndatalokal')"
+                >
+                  <i class="icon-speech"></i>
+                  <p>Data Lokal</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="main-panel">
+        <div class="content" id="blokkonten"></div>
+      </div>
+
+      <div class="modal fade" role="dialog" id="modalqr">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">QRCode Generator</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group"></div>
+                  <label>Kata-Kata</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="txtkata"
+                    style="font-size: 20px"
+                  />
+                </div>
+              </div>
+              <div
+                id="hasilrq"
+                style="
+                  width: 200px;
+                  height: 200px;
+                  margin: 0 auto;
+                  padding: 20px;
+                "
+              ></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="genqr()">
+                Generate
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="resetqr()"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // konten("beranda.html", "#mnberanda");
+      if (localStorage.halakhir == "" || localStorage.halakhir == undefined) {
+        localStorage.setItem("halakhir", "beranda.html|#mnberanda");
+        konten("beranda.html", "#mnberanda");
+      } else {
+        let x = localStorage.halakhir;
+        let nilai = x.split("|");
+        konten(nilai[0], nilai[1]);
+      }
+
+      function konten(namafile, namaid) {
+        $("#blokkonten").load(namafile);
+        $(".mnsidebar").removeClass("active");
+        $(namaid).addClass("active");
+        $("#btnx").click();
+      }
+
+      function HitungHari() {
+        let terjemahhari = [
+          "Minggu",
+          "Senin",
+          "Selasa",
+          "Rabu",
+          "Kamis",
+          "Jumat",
+          "Sabtu",
+        ];
+        let x = $("#txttgllahir").val();
+        let tgllahir = new Date(x);
+        return terjemahhari[tgllahir.getDay()];
+      }
+
+      function HitungPasaran() {
+        let terjemahpasar = ["Kliwon", "Legi", "Pahing", "Pon", "Wage"];
+        let x = $("#txttgllahir").val();
+        let tgllahir = new Date(x);
+        let y = "1900-01-01";
+        let tglawal = new Date(y);
+        let selisih =
+          (Date.parse(tgllahir.toGMTString()) -
+            Date.parse(tglawal.toGMTString())) /
+          (1000 * 60 * 60 * 24);
+        let hasil = Math.floor(selisih + 2) % 5;
+        return terjemahpasar[hasil];
+      }
+
+      function tampil() {
+        let hari = HitungHari();
+        let pasaran = HitungPasaran();
+        let hasil = `Hari Kelahiran: ${hari} ${pasaran}`;
+        $("#blokhasil").html(hasil);
+      }
+
+      function kosong() {
+        $("#txttgllahir").val("");
+        $("#blokhasil").html("Hari Kelahiran: ?????");
+      }
+
+      function cobaevent() {
+        let nama = $("#txtnama").val();
+        let jumlah = nama.length;
+        $("#blokhasil").html(`Jumlah Karakter: ${jumlah}`);
+        jumlah > 0
+          ? $("#btnreset").attr("hidden", false)
+          : $("#btnreset").attr("hidden", true);
+      }
+
+      function resetnama() {
+        $("#txtnama").val("");
+        cobaevent();
+      }
+
+      function cobaevent2(x) {
+        if (x == "kursor") {
+          $("#btnreset").removeClass("btn-primary");
+          $("#btnreset").addClass("btn-danger");
+        } else {
+          $("#btnreset").removeClass("btn-danger");
+          $("#btnreset").addClass("btn-primary");
+        }
+      }
+
+      function ambildatafilm() {
+        let hasil = "";
+        let x;
+        for (x of datafilm) {
+          let cv = x.cover;
+          let jd = x.judul;
+          let pm = x.pemain;
+          let th = x.tahun;
+          let rt = x.rating;
+          let sn = x.sinopsis;
+          hasil += `<img src="${cv}" data-judul="${jd}" data-pemain="${pm}" data-tahun="${th}" data-rating="${rt}" data-sinopsis="${sn}" class="col-md-2" style="margin-bottom: 15px; cursor: pointer;" onclick="tampildetail(this)">`;
+        }
+        $("#blokfilm").html(hasil);
+      }
+
+      function tampildetail(el) {
+        let judul = $(el).data("judul");
+        let pemain = $(el).data("pemain");
+        let tahun = $(el).data("tahun");
+        let rating = $(el).data("rating");
+        let sinopsis = $(el).data("sinopsis");
+        $("#blokdetail").html(`
+            <p style="font-size: 20px;"><b>Judul:</b><br>${judul}
+            <p style='font-size: 20px;'><b>Pemain:</b><br>${pemain}
+            <p style='font-size: 20px;'><b>Tahun:</b><br>${tahun}
+            <p style='font-size: 20px;'><b>Rating:</b><br>${rating}
+            <p style='font-size: 20px; text-align: justify'><b>Sinopsis:</b><br>${sinopsis}
+            `);
+        $("#modaldetail").modal("show");
+      }
+
+      function genqr() {
+        $("#hasilrq").html("");
+        let kodeqr = new QRCode(document.getElementById("hasilrq"), {
+          width: 150,
+          height: 150,
+        });
+        let kata = $("#txtkata").val();
+        kodeqr.makeCode(kata);
+      }
+      function resetqr() {
+        $("#txtkata").val("");
+        $("#hasilrq").html("");
+      }
+    </script>
+  </body>
+</html>

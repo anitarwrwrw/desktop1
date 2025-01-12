@@ -1,0 +1,269 @@
+<div class="row mt-5">
+    <div class="modal fade" role="dialog" id="modaltambah">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-size: 20px;">Tambah Siswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>NIS</label><input type="text" id="txtnis" class="form-control" style="font-size: 20px;">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Nama</label><input type="text" id="txtnama" class="form-control" style="font-size: 20px;">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Jenis Kelamin</label>
+                            <select id="cbojk" class="form-control" style="font-size: 20px;">
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Kelas</label>
+                            <select id="cbokelas" class="form-control" style="font-size: 20px;">
+                                <option value="X">X (Sepuluh)</option>
+                                <option value="XI">XI (Sebelas)</option>
+                                <option value="XII">XII (Dua Belas)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="tambahsiswa()">Simpan</button>
+                    <button type="button" class="btn btn-secondary" onclick="kosongsiswa()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="modaledit">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-size: 20px;">Update Siswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>NIS</label><input type="text" id="txtnise" class="form-control" style="font-size: 20px;" readonly>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Nama</label><input type="text" id="txtnamae" class="form-control" style="font-size: 20px;">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Jenis Kelamin</label>
+                            <select id="cbojke" class="form-control" style="font-size: 20px;">
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Kelas</label>
+                            <select id="cbokelase" class="form-control" style="font-size: 20px;">
+                                <option value="X">X (Sepuluh)</option>
+                                <option value="XI">XI (Sebelas)</option>
+                                <option value="XII">XII (Dua Belas)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="updatesiswa()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title">Data Lokal</div>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modaltambah">Tambah Data</button>&nbsp
+                        <button type="button" class="btn btn-primary" onclick="ambildatasiswa()">Refresh Data</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tbl-siswa" class="display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">NIS</th>
+                                <th style="width: 40%;">Nama</th>
+                                <th style="width: 15%;">Jenis Kelamin</th>
+                                <th style="width: 10%;">Kelas</th>
+                                <th style="width: 20%;">Operasi</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    localStorage.halakhir = "datalokal.html | #mndatalokal";
+    let tblku = $('#tbl-siswa').DataTable ();
+
+    let db;
+    buat_db();
+    function buat_db(){
+        if (window.indexedDB){
+            let operasi = window.indexedDB.open("dblokal", 1);
+            operasi.onupgradeneeded = function (e) {
+                db = e.target.result;
+                let tabel = db.createObjectStore("siswa", {keyPath: 'nis'});
+                tabel.createIndex("nama", "nama", {unique: false});
+                tabel.createIndex("jenis_kelamin", "jenis_kelamin", {unique: false});
+                tabel.createIndex("kelas", "kelas", {unique: false});
+            };
+            operasi.onerror = event => {
+                console.error(`Database error: ${event.target.errorCode}`);
+            };
+            operasi.onsuccess = event => {
+                db = event.target.result;
+                ambildatasiswa();
+            };
+        }else{
+            console.log("Error : Tidak Support IndexedDB");
+        }
+    }
+
+    function ambildatasiswa(){
+        let proses = db.transaction(["siswa"],"readonly");
+        let object = proses.objectStore("siswa");
+        let baca = object.openCursor();
+        tblku.clear().draw();
+        baca.onsuccess = function (event) {
+            let cursor = event.target.result;
+            if(cursor){
+                let dt = Object.values(cursor.value);
+                let nis = dt[0];
+                let nama = dt[1];
+                let jk = dt[2];
+                let kelas = dt[3];
+                let tomboledit = `<button type="button" class="btn btn-sm btn-primary" data-nis="${nis}" onclick="filter(this)">Edit</button>`;
+                let tombolhapus = `<button type="button" class="btn btn-sm btn-danger" data-nis="${nis}" onclick="hapus(this)">Hapus</button>`;
+                tblku.row.add([nis, nama, jk, kelas, tomboledit + tombolhapus]).draw();
+                cursor.continue();
+            }
+        };
+        baca.onerror = function(event) {
+            console.error(`Gagal: ${event.target.errorCode}`);
+        };
+    }
+
+    function kosongsiswa(){
+        $("#txtnis").val("");
+        $("#txtnama").val("");
+        $("#cbojk").val("Laki-Laki");
+        $("#cbokelas").val("X");
+    }
+
+    function tambahsiswa(){
+        let nis = $("#txtnis").val();
+        let nama = $("#txtnama").val();
+        let jk = $("#cbojk").val();
+        let kelas = $("#cbokelas").val();
+        if (nis == "" || nama == "" || jk == "" || kelas == "") {
+            swal({title: "Gagal", text: "Ada isian yang masih kosong", icon: "error"});
+            return;
+        }
+        let proses = db.transaction(["siswa"],"readwrite");
+        let object = proses.objectStore("siswa");
+        let data = {nis: nis, nama: nama, jenis_kelamin: jk, kelas: kelas};
+        let hasil = object.add(data);
+        hasil.onsuccess = function(event) {
+            swal({title: "Berhasil", text: "Tambah Data Berhasil", icon: "success"});
+            ambildatasiswa();
+            kosongsiswa();
+        };
+        hasil.onerror = function(event) {
+            swal({title: "Gagal", text: "Tambah Data Gagal", icon: "error"});
+        };
+    }
+
+    function filter(el){
+        let nis = $(el).data("nis");
+        let proses = db.transaction(["siswa"],"readonly");
+        let object = proses.objectStore("siswa");
+        let baca = object.openCursor();
+        baca.onsuccess = function(event) {
+            let cursor = event.target.result;
+            if (cursor) {
+                let dt = Object.values(cursor.value);
+                if (dt[0] == nis){
+                    $("#txtnise").val(nis);
+                    $("#txtnamae").val(dt[1]);
+                    $("#cbojke").val(dt[2]);
+                    $("#cbokelase").val(dt[3]);
+                    $("#modaledit").modal("show");
+                    return;
+                }
+                cursor.continue();
+            }
+        };
+        baca.onerror = function(event) {
+            swal({title: "Gagal", text: event.target.errorCode, icon:"error"});
+        };
+    }
+
+    function updatesiswa(){
+        let nis = $("#txtnise").val();
+        let nama = $("#txtnamae").val();
+        let jk = $("#cbojke").val();
+        let kelas = $("#cbokelase").val();
+        if (nis == "" || nama == "" || jk == "" || kelas == ""){
+            swal({title: "Gagal", text: "Ada isian yang masih kosong",icon: "error"});
+            return;
+        }
+        let proses = db.transaction(["siswa"],"readwrite");
+        let object = proses.objectStore("siswa");
+        let data = {nis: nis, nama: nama, jenis_kelamin: jk, kelas: kelas};
+        let hasil = object.put(data);
+        hasil.onsuccess = function(event) {
+            swal({title: "Berhasil", text: "Update Data Berhasil", icon: "success"})
+            ambildatasiswa();
+            $("#modalupdate").modal("hide");
+        };
+        hasil.onerror = function(event) {
+            swal({title: "Gagal", text: event.target.errorCode, icon: "error"})
+        };
+    }
+
+    function hapus(el){
+        let nis = $(el).data("nis");
+        if(nis  == ""){
+            swal({title: "Gagal", text: "NIS tidak Terdeteksi",icon:"error"});
+            return;
+        }
+        swal({
+            title: "Hapus Data",
+            text: `Anda Yakin Ingin Menghapus NIS ${nis} ?`,
+            icon: "warning",
+            buttons: {
+                confirm: {text: "Ya", className: "btn btn-primary"},
+                cancel: {visible: true, text: "Tidak", className: "btn btn-danger"},
+
+            }
+        }).then((hapus) => {
+            if (hapus) {
+                let proses = db.transaction(["siswa"],"readwrite");
+                let object = proses.objectStore("siswa");
+                hasil = object.delete(String(nis));
+                hasil.onsuccess = function(event) {
+                    swal({title: "Berhasil", text: "Data Berhasil Dihapus", icon: "success"});
+                    ambildatasiswa();
+                };
+                hasil.onerror = function(event) {
+                    swal({title: "Gagal", text: event.target.errorCode, icon: "error"});
+                };
+            }
+        })
+    }
+</script>

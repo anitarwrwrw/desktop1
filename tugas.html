@@ -1,0 +1,70 @@
+<div class="row mt-5">
+  <div class="col-md-4 ml-auto mr-auto">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Form Hitung Luas dan Keliling Segitiga Sama Sisi</div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Masukkan Panjang Sisi (cm)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="txtsisi"
+                placeholder="Masukkan panjang sisi segitiga"
+                style="font-size: 20px" />
+              <small class="form-text text-muted">
+                Panjang sisi harus berupa angka positif
+              </small>
+            </div>
+
+            <div class="form-group">
+              <button type="button" class="btn btn-primary" id="btn-hitung">Hitung</button>
+              <button type="button" class="btn btn-danger" id="btn-reset">Reset</button>
+            </div>
+
+            <div class="form-group">
+              <p id="hasil" style="font-size: 20px">
+                Luas Segitiga: ? cm² <br />
+                Keliling Segitiga: ? cm
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#btn-hitung').click(function() {
+      const sisi = parseFloat($('#txtsisi').val());
+
+      if (isNaN(sisi) || sisi <= 0) {
+        alert('Masukkan panjang sisi yang valid!');
+        return;
+      }
+
+      const keliling = 3 * sisi;
+
+      const luas = (Math.sqrt(3) / 4) * Math.pow(sisi, 2);
+
+      $('#hasil').html(`
+        Luas Segitiga: ${luas.toFixed(2)} cm² <br />
+        Keliling Segitiga: ${keliling.toFixed(2)} cm
+      `);
+    });
+
+    $('#btn-reset').click(function() {
+      $('#txtsisi').val('');
+      $('#hasil').html(`
+        Luas Segitiga: ? cm² <br />
+        Keliling Segitiga: ? cm
+      `);
+    });
+  });
+</script>

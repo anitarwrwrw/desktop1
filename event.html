@@ -1,0 +1,29 @@
+<div class="row mt-5">
+    <div class="col-md-4 ml-auto mr-auto">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Form Percobaan Event</div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Isi Nama</label>
+                            <input type="text" class="form-control" id="txtnama" onkeyup="cobaevent()" style="font-size: 20px;">
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="btnreset" onclick="resetnama()" onmouseover="cobaevent2('kursor')"
+onmouseout="cobaevent2('default')" hidden>Reset</button>
+                        </div>
+                        <div class="form-group">
+                            <p id="blokhasil" style="font-size: 20px;">Jumlah Karakter: ?????</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    localStorage.halakhir = "event.html | #mnevent";
+</script>

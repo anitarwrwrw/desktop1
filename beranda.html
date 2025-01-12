@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Beranda</h2>
+                    <h5 class="text-white op-7 mb-2">Halaman Beranda Informasi Sistem</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-3">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <div class="card-title">Jumlah Buku</div>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="mb-4 mt-2">
+                            <h1 id="blokjmlbuku">-</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <div class="card-title">Jumlah Pengarang</div>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="mb-4 mt-2">
+                            <h1 id="blokjmlpengarang">-</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <div class="card-title">Jumlah Penerbit</div>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="mb-4 mt-2">
+                            <h1 id="blokjmlpenerbit">-</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <div class="card-title">Penerbit Terbanyak</div>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="mb-4 mt-2">
+                            <h1 id="blokpenerbitterbanyak">-</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        localStorage.halakhir = "beranda.html|#mnberanda";
+
+        rekapitulasi();
+        function rekapitulasi(){
+            $.getJSON("http://127.0.0.1:8000/api/datarekap", function(result){
+                var dt = "";
+                $.each(result, function(i, kolom){
+                    $("#blokjmlbuku").html (kolom.jumlah_buku);
+                    $("#blokjmlpengarang").html (kolom.jumlah_pengarang);
+                    $("#blokjmlpenerbit").html (kolom.jumlah_penerbit);
+                    $("#blokpenerbitterbanyak").html (kolom.penerbit_terbanyak);
+                })
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Faktorial</title>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h3>Faktorial</h3>
+      <div class="form-group">
+        <label for="inputAngka">Masukkan Angka:</label>
+        <input type="number" id="inputAngka" class="form-control" />
+      </div>
+      <button class="btn btn-primary" onclick="tambahFaktorial()">
+        Tambah Faktorial
+      </button>
+
+      <h4 class="mt-4">Daftar Faktorial</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Angka</th>
+            <th>Faktorial</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>  
+        <tbody id="tabelFaktorial">
+          <!-- Data akan ditampilkan di sini -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      let dataFaktorial = [];
+
+      // Fungsi untuk menghitung faktorial
+      function hitungFaktorial(n) {
+        if (n === 0 || n === 1) {
+          return 1;
+        } else {
+          return n * hitungFaktorial(n - 1);
+        }
+      }
+
+      // Fungsi untuk menambah faktorial ke dalam daftar
+      function tambahFaktorial() {
+        let angka = parseInt(document.getElementById("inputAngka").value);
+        if (!isNaN(angka)) {
+          let faktorial = hitungFaktorial(angka);
+          dataFaktorial.push({ angka: angka, faktorial: faktorial });
+          tampilkanData();
+          document.getElementById("inputAngka").value = ""; // Kosongkan input
+        }
+      }
+
+      // Fungsi untuk menampilkan data dalam tabel
+      function tampilkanData() {
+        let tabel = document.getElementById("tabelFaktorial");
+        tabel.innerHTML = "";
+        dataFaktorial.forEach((item, index) => {
+          let row = tabel.insertRow();
+          row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.angka}</td>
+            <td>${item.faktorial}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" onclick="editFaktorial(${index})">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="hapusFaktorial(${index})">Hapus</button>
+            </td>
+          `;
+        });
+      }
+
+      // Fungsi untuk mengedit faktorial
+      function editFaktorial(index) {
+        let angkaBaru = prompt(
+          "Masukkan angka baru:",
+          dataFaktorial[index].angka
+        );
+        if (angkaBaru !== null && !isNaN(angkaBaru)) {
+          dataFaktorial[index].angka = parseInt(angkaBaru);
+          dataFaktorial[index].faktorial = hitungFaktorial(
+            dataFaktorial[index].angka
+          );
+          tampilkanData();
+        }
+      }
+
+      // Fungsi untuk menghapus faktorial dari daftar
+      function hapusFaktorial(index) {
+        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+          dataFaktorial.splice(index, 1); // Menghapus elemen dari array
+          tampilkanData(); // Refresh tabel
+        }
+      }
+    </script>
+  </body>
+</html>
